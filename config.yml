@@ -1,0 +1,25 @@
+# ----------------------------------------------------
+# Type:
+# classic: Only break logs above the log you broke
+# classic-leaves: Like classic, excepts breaks all leaves.
+# full: Breaks all logs and leaves connected.
+# full-noleaves: Breaks all logs connected.
+# ----------------------------------------------------
+# Timber-items:
+# These are the items you can hold when you destroy logs.
+# You can use any item IDs or block IDs for this.
+# These are the defaults:
+# 271 - Wooden Axe
+# 275 - Stone Axe
+# 258 - Iron Axe
+# 286 - Golden Axe
+# 279 - Diamond Axe
+# ----------------------------------------------------
+
+type: classic
+tools:
+ - 271
+ - 275
+ - 258
+ - 286
+ - 279
