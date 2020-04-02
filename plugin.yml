@@ -1,4 +1,10 @@
 name: Lumberjack
-version: 1.0
+version: 2.0.0
 author: Ryaan
 main: com.gageryanplugins.lumberjack.Main
+api-version: 1.15
+description: Makes cutting down trees much easier!
+permission:
+    lumberjack.use:
+        description: Whoever has this permission is able to use the plugin.
+        default: op
