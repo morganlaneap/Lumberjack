@@ -5,21 +5,24 @@
 # full: Breaks all logs and leaves connected.
 # full-noleaves: Breaks all logs connected.
 # ----------------------------------------------------
-# Timber-items:
+# Lumberjack-items:
 # These are the items you can hold when you destroy logs.
-# You can use any item IDs or block IDs for this.
+# Currently, the items below are the only ones supported.
 # These are the defaults:
-# 271 - Wooden Axe
-# 275 - Stone Axe
-# 258 - Iron Axe
-# 286 - Golden Axe
-# 279 - Diamond Axe
+# wooden - Wooden Axe
+# stone - Stone Axe
+# iron - Iron Axe
+# golden - Golden Axe
+# diamond - Diamond Axe
 # ----------------------------------------------------
 
 type: classic
 tools:
- - 271
- - 275
- - 258
- - 286
- - 279
+ - wooden
+ - stone
+ - iron
+ - golden
+ - diamond
+ 
+ 
+ 
