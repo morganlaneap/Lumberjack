@@ -1,5 +1,6 @@
 package com.gageryanplugins.lumberjack;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -22,7 +23,13 @@ public class BlockListener implements Listener {
 
         // Load allowed tools from configuration file
         this.plugin.getConfig().getStringList("tools").forEach(tool -> {
-            //TODO: Handle configuration error
+
+            if(!isMaterialValid(tool)) {
+                Bukkit.getConsoleSender().sendMessage("Error while loading tools list; Fallowing tool skipped: " + tool);
+                Bukkit.getConsoleSender().sendMessage("Please verify the material name and correct it.");
+                return;
+            }
+
             allowedTools.add(Material.valueOf(tool));
         });
     }
@@ -124,6 +131,14 @@ public class BlockListener implements Listener {
             case OAK_LEAVES:
             case SPRUCE_LEAVES:
                 return true;
+        }
+
+        return false;
+    }
+
+    private boolean isMaterialValid(String name) {
+        for (Material value : Material.values()) {
+            if(value.name().equals(name)) return true;
         }
 
         return false;

@@ -22,8 +22,6 @@ public class Lumberjack extends JavaPlugin implements Listener {
 
     private void createConfig() {
 
-        //TODO: Check config version and add converter for old configuration schema
-
         try {
             if (!getDataFolder().exists()) {
                 getDataFolder().mkdirs();
@@ -71,5 +69,4 @@ public class Lumberjack extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
     }
-
 }
