@@ -11,7 +11,9 @@
 # ----------------------------------------------------
 
 config-version: 2
+
 type: classic
+
 tools:
  - WOODEN_AXE
  - STONE_AXE
