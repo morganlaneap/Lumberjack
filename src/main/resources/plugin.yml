@@ -1,5 +1,5 @@
 name: Lumberjack
-version: "v.0.3.0-DEVELOPMENT"
+version: "0.3.0-DEVELOPMENT"
 authors: [Ryaan, DevSnox]
 main: com.gageryanplugins.lumberjack.Lumberjack
 api-version: 1.13
