@@ -9,6 +9,8 @@ Installation:
     
     3. Move the Lumberjack .jar into your server's plugins folder.
     
-    4. Restart your server!
+    4. Restart your server.
+    
+    5. Assign permission to users.
 
-
+    6. Configure the config file in the Lumberjack folder in your plugins folder!
