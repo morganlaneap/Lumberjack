@@ -68,6 +68,8 @@ public class Lumberjack extends JavaPlugin implements Listener {
                         }
                     }
 
+                    this.getLogger().log(Level.INFO, "Changed configuration to version 2! Now supporting all materials as tools.");
+
                     getConfig().set("config-version", 2);
                 }
 
