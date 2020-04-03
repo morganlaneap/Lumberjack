@@ -8,13 +8,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-public class Events implements Listener {
+public class BlockListener implements Listener {
 	
-	public Main plugin;
+	private Lumberjack plugin;
 	
-	public Events() {
-		plugin = Main.getInstance();
+	public BlockListener(Lumberjack plugin) {
+		this.plugin = plugin;
 	}
+
 	@EventHandler
 	public void onLogBreak(BlockBreakEvent e) {
 		String ih = e.getPlayer().getInventory().getItemInMainHand().getType().toString();
@@ -66,6 +67,5 @@ public class Events implements Listener {
 		} else {
 			return;
 		}
-		
 	}
 }

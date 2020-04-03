@@ -6,28 +6,15 @@ import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin implements Listener {
-	
-	public static String type;
-	public static String tools;
-	public static Main instance;
-	public Events ec;
-	
-	public Main() {
-		instance = this;
-		ec = new Events();
-	}
-	
-	public static Main getInstance() {
-		return instance;
-	}
-	
+public class Lumberjack extends JavaPlugin implements Listener {
+
+	@Override
 	public void onEnable() {
+		// Create config-file
 		createConfig();
-		type = getConfig().getString("type");
-		tools = getConfig().getString("tools");
-		getServer().getPluginManager().registerEvents(new Events(), this);
-		
+
+		// Register Listener
+		getServer().getPluginManager().registerEvents(new BlockListener(this), this);
 	}
 	
 	private String gb(World world, int x, int y, int z) {
