@@ -73,8 +73,8 @@ public class Lumberjack extends JavaPlugin implements Listener {
     }
 
     private boolean isServerVersionHigherOrEqual(String minVersion, String serverVersion) {
-        String[] minParts = minVersion.split(".");
-        String[] serverParts = serverVersion.split(".");
+        String[] minParts = minVersion.split("\\.");
+        String[] serverParts = serverVersion.split("\\.");
 
         for(int i = 0; i < 2; i++) {
             if(!isHigherOrEqual(minParts[i], serverParts[i])) return false;
@@ -84,7 +84,7 @@ public class Lumberjack extends JavaPlugin implements Listener {
     }
 
     private boolean isHigherOrEqual(String min, String check) {
-        if(Integer.valueOf(check) >= Integer.valueOf(min)) return true;
+        if(Integer.parseInt(check) >= Integer.parseInt(min)) return true;
         return false;
     }
 }
