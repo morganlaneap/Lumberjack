@@ -19,13 +19,15 @@ public class BlockListener implements Listener {
 	@EventHandler
 	public void onLogBreak(BlockBreakEvent e) {
 		String ih = e.getPlayer().getInventory().getItemInMainHand().getType().toString();
+
 		World tw = e.getPlayer().getWorld();
 		Player p = e.getPlayer();
+
 		int x = e.getBlock().getX();
 		int y = e.getBlock().getY();
 		int z = e.getBlock().getZ();
-		plugin.reloadConfig();
-	    String oak = "OAK_LOG";
+
+		String oak = "OAK_LOG";
 		String soak = "STRIPPED_OAK_LOG";
 		String spruce = "SPRUCE_LOG";
 		String sspruce = "STRIPPED_SPRUCE_LOG";
