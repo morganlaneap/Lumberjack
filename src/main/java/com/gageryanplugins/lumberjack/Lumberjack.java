@@ -1,6 +1,8 @@
 package com.gageryanplugins.lumberjack;
 
-import org.bukkit.World;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,163 +21,95 @@ public class Lumberjack extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new BlockListener(this), this);
     }
 
-    private String gb(World world, int x, int y, int z) {
-        return String.valueOf(world.getBlockAt(x, y, z).getBlockData().getMaterial());
-    }
 
-    public void breakChain(World w, int x, int y, int z) {
+    public void breakChain(Block block) {
         String ty, t = getConfig().getString("type");
-        String oak = "OAK_LOG";
-        String soak = "STRIPPED_OAK_LOG";
-        String spruce = "SPRUCE_LOG";
-        String sspruce = "STRIPPED_SPRUCE_LOG";
-        String birch = "BIRCH_LOG";
-        String sbirch = "STRIPPED_BIRCH_LOG";
-        String jungle = "JUNGLE_LOG";
-        String sjungle = "STRIPPED_JUNGLE_LOG";
-        String acacia = "ACACIA_LOG";
-        String sacacia = "STRIPPED_ACACIA_LOG";
-        String darkoak = "DARK_OAK_LOG";
-        String sdarkoak = "STRIPPED_DARK_OAK_LOG";
 
-
+        //TODO: Improve config value check
         if (t.equals("classic") || t.equals("classic-leaves") || t.equals("full") || t.equals("full-noleaves")) {
             ty = t;
         } else {
             return;
         }
-        w.getBlockAt(x, y, z).breakNaturally();
-        if (gb(w, x, y + 1, z).toString() == oak ||
-                (gb(w, x, y + 1, z).toString() == soak) ||
-                (gb(w, x, y + 1, z).toString() == spruce) ||
-                (gb(w, x, y + 1, z).toString() == sspruce) ||
-                (gb(w, x, y + 1, z).toString() == birch) ||
-                (gb(w, x, y + 1, z).toString() == sbirch) ||
-                (gb(w, x, y + 1, z).toString() == jungle) ||
-                (gb(w, x, y + 1, z).toString() == sjungle) ||
-                (gb(w, x, y + 1, z).toString() == acacia) ||
-                (gb(w, x, y + 1, z).toString() == sacacia) ||
-                (gb(w, x, y + 1, z).toString() == darkoak) ||
-                (gb(w, x, y + 1, z).toString() == sdarkoak)) {
-            breakChain(w, x, y + 1, z);
-        }
+
+        // Break initial block
+        block.breakNaturally();
+
+        cut(block, BlockFace.UP);
+        cut(block, BlockFace.DOWN);
+
         if (ty.equals("classic-leaves") || ty.equals("full")) {
-            String oleaves = "OAK_LEAVES";
-            String sleaves = "Material.SPRUCE_LEAVES";
-            String bleaves = "BIRCH_LEAVES";
-            String jleaves = "JUNGLE_LEAVES";
-            String aleaves = "ACACIA_LEAVES";
-            String doleaves = "DARK_OAK_LEAVES";
-            if (gb(w, x, y + 1, z).toString() == oleaves ||
-                    (gb(w, x, y + 1, z).toString() == sleaves) ||
-                    (gb(w, x, y + 1, z).toString() == bleaves) ||
-                    (gb(w, x, y + 1, z).toString() == jleaves) ||
-                    (gb(w, x, y + 1, z).toString() == aleaves) ||
-                    (gb(w, x, y + 1, z).toString() == doleaves)) {
-                breakChain(w, x, y + 1, z);
-            }
-            if (gb(w, x, y - 1, z).toString() == oleaves ||
-                    (gb(w, x, y - 1, z).toString() == sleaves) ||
-                    (gb(w, x, y - 1, z).toString() == bleaves) ||
-                    (gb(w, x, y - 1, z).toString() == jleaves) ||
-                    (gb(w, x, y - 1, z).toString() == aleaves) ||
-                    (gb(w, x, y - 1, z).toString() == doleaves)) {
-                breakChain(w, x, y - 1, z);
-            }
-            if (gb(w, x + 1, y, z).toString() == oleaves ||
-                    (gb(w, x + 1, y, z).toString() == sleaves) ||
-                    (gb(w, x + 1, y, z).toString() == bleaves) ||
-                    (gb(w, x + 1, y, z).toString() == jleaves) ||
-                    (gb(w, x + 1, y, z).toString() == aleaves) ||
-                    (gb(w, x + 1, y, z).toString() == doleaves)) {
-                breakChain(w, x + 1, y, z);
-            }
-            if (gb(w, x - 1, y, z).toString() == oleaves ||
-                    (gb(w, x - 1, y, z).toString() == sleaves) ||
-                    (gb(w, x - 1, y, z).toString() == bleaves) ||
-                    (gb(w, x - 1, y, z).toString() == jleaves) ||
-                    (gb(w, x - 1, y, z).toString() == aleaves) ||
-                    (gb(w, x - 1, y, z).toString() == doleaves)) {
-                breakChain(w, x - 1, y, z);
-            }
-            if (gb(w, x - 1, y, z + 1).toString() == oleaves ||
-                    (gb(w, x, y, z + 1).toString() == sleaves) ||
-                    (gb(w, x, y, z + 1).toString() == bleaves) ||
-                    (gb(w, x, y, z + 1).toString() == jleaves) ||
-                    (gb(w, x, y, z + 1).toString() == aleaves) ||
-                    (gb(w, x, y, z + 1).toString() == doleaves)) {
-                breakChain(w, x, y, z + 1);
-            }
-            if (gb(w, x - 1, y, z - 1).toString() == oleaves ||
-                    (gb(w, x, y, z - 1).toString() == sleaves) ||
-                    (gb(w, x, y, z - 1).toString() == bleaves) ||
-                    (gb(w, x, y, z - 1).toString() == jleaves) ||
-                    (gb(w, x, y, z - 1).toString() == aleaves) ||
-                    (gb(w, x, y, z - 1).toString() == doleaves)) {
-                breakChain(w, x, y, z - 1);
-            }
+            cut(block, BlockFace.UP);
+            cut(block, BlockFace.DOWN);
+            cut(block, block.getX() + 1, block.getY(), block.getZ());
+            cut(block, block.getX() - 1, block.getY(), block.getZ());
+            cut(block, block.getX(), block.getY(), block.getZ() - 1);
+            cut(block, block.getX(), block.getY(), block.getZ() + 1);
         }
+
         if (ty.equals("full") || ty.equals("full-noleaves")) {
-            String oleaves = "Material.OAK_LEAVES";
-            String sleaves = "Material.SPRUCE_LEAVES";
-            String bleaves = "Material.BIRCH_LEAVES";
-            String jleaves = "Material.JUNGLE_LEAVES";
-            String aleaves = "Material.ACACIA_LEAVES";
-            String doleaves = "Material.DARK_OAK_LEAVES";
-            if (gb(w, x, y + 1, z).toString() == oleaves ||
-                    (gb(w, x, y + 1, z).toString() == sleaves) ||
-                    (gb(w, x, y + 1, z).toString() == bleaves) ||
-                    (gb(w, x, y + 1, z).toString() == jleaves) ||
-                    (gb(w, x, y + 1, z).toString() == aleaves) ||
-                    (gb(w, x, y + 1, z).toString() == doleaves)) {
-                breakChain(w, x, y + 1, z);
-            }
-            if (gb(w, x, y - 1, z).toString() == oleaves ||
-                    (gb(w, x, y - 1, z).toString() == sleaves) ||
-                    (gb(w, x, y - 1, z).toString() == bleaves) ||
-                    (gb(w, x, y - 1, z).toString() == jleaves) ||
-                    (gb(w, x, y - 1, z).toString() == aleaves) ||
-                    (gb(w, x, y - 1, z).toString() == doleaves)) {
-                breakChain(w, x, y - 1, z);
-            }
-            if (gb(w, x + 1, y, z).toString() == oleaves ||
-                    (gb(w, x + 1, y, z).toString() == sleaves) ||
-                    (gb(w, x + 1, y, z).toString() == bleaves) ||
-                    (gb(w, x + 1, y, z).toString() == jleaves) ||
-                    (gb(w, x + 1, y, z).toString() == aleaves) ||
-                    (gb(w, x + 1, y, z).toString() == doleaves)) {
-                breakChain(w, x + 1, y, z);
-            }
-            if (gb(w, x - 1, y, z).toString() == oleaves ||
-                    (gb(w, x - 1, y, z).toString() == sleaves) ||
-                    (gb(w, x - 1, y, z).toString() == bleaves) ||
-                    (gb(w, x - 1, y, z).toString() == jleaves) ||
-                    (gb(w, x - 1, y, z).toString() == aleaves) ||
-                    (gb(w, x - 1, y, z).toString() == doleaves)) {
-                breakChain(w, x - 1, y, z);
-            }
-            if (gb(w, x - 1, y, z + 1).toString() == oleaves ||
-                    (gb(w, x, y, z + 1).toString() == sleaves) ||
-                    (gb(w, x, y, z + 1).toString() == bleaves) ||
-                    (gb(w, x, y, z + 1).toString() == jleaves) ||
-                    (gb(w, x, y, z + 1).toString() == aleaves) ||
-                    (gb(w, x, y, z + 1).toString() == doleaves)) {
-                breakChain(w, x, y, z + 1);
-            }
-            if (gb(w, x - 1, y, z - 1).toString() == oleaves ||
-                    (gb(w, x, y, z - 1).toString() == sleaves) ||
-                    (gb(w, x, y, z - 1).toString() == bleaves) ||
-                    (gb(w, x, y, z - 1).toString() == jleaves) ||
-                    (gb(w, x, y, z - 1).toString() == aleaves) ||
-                    (gb(w, x, y, z - 1).toString() == doleaves)) {
-                breakChain(w, x, y, z - 1);
-            }
+            Block block1 = block.getRelative(BlockFace.UP).getRelative(BlockFace.UP);
+            Block block2 = block.getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN);
+
+            cut(block, block.getFace(block1));
+            cut(block, block.getFace(block2));
+
+            cut(block, block.getX() + 2, block.getY(), block.getZ());
+            cut(block, block.getX() - 2, block.getY(), block.getZ());
+            cut(block, block.getX(), block.getY(), block.getZ() - 2);
+            cut(block, block.getX(), block.getY(), block.getZ() + 2);
         }
+    }
+
+    public void cut(Block block, BlockFace blockFace) {
+        cut(block, blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
+    }
+
+    public void cut(Block block, int x, int y, int z) {
+        block = block.getRelative(x, y, z);
+        if (!areLeaves(block.getType())) return;
+        if (!isLog(block.getType())) return;
+        breakChain(block);
+    }
+
+    // Returns boolean if material is of type Log or not.
+    public boolean isLog(Material material) {
+        switch (material) {
+            case OAK_LOG:
+            case STRIPPED_OAK_LOG:
+            case SPRUCE_LOG:
+            case STRIPPED_SPRUCE_LOG:
+            case BIRCH_LOG:
+            case JUNGLE_LOG:
+            case STRIPPED_JUNGLE_LOG:
+            case ACACIA_LOG:
+            case STRIPPED_ACACIA_LOG:
+            case DARK_OAK_LOG:
+            case STRIPPED_DARK_OAK_LOG:
+                return true;
+        }
+
+        return false;
+    }
+
+    // Returns boolean if material is of type Leaves or not.
+    public boolean areLeaves(Material material) {
+        switch (material) {
+            case ACACIA_LEAVES:
+            case BIRCH_LEAVES:
+            case DARK_OAK_LEAVES:
+            case JUNGLE_LEAVES:
+            case OAK_LEAVES:
+            case SPRUCE_LEAVES:
+                return true;
+        }
+
+        return false;
     }
 
     private void createConfig() {
 
-    	//TODO: Check config version and add converter for old configuration schema
+        //TODO: Check config version and add converter for old configuration schema
 
         try {
             if (!getDataFolder().exists()) {
