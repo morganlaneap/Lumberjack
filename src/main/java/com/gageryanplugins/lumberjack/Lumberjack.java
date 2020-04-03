@@ -14,7 +14,7 @@ public class Lumberjack extends JavaPlugin implements Listener {
     public void onEnable() {
         String minVersion = "1.13.0";
 
-        if(!isServerVersionHigherOrEqual(minVersion, this.getServer().getVersion())) {
+        if(!isServerVersionHigherOrEqual(minVersion, this.getServer().getBukkitVersion().split("-")[0])) {
             this.getLogger().log(Level.SEVERE, "Your server version is not supported! " +
                     "Plugin needs at least server version " + minVersion + " to work!");
             this.getPluginLoader().disablePlugin(this);
