@@ -29,54 +29,46 @@ public class Lumberjack extends JavaPlugin implements Listener {
     }
 
     private void createConfig() {
-        //TODO: Clean-up
-        try {
-            if (!getDataFolder().exists()) {
-                getDataFolder().mkdirs();
-            }
+        if(!this.getDataFolder().exists()) getDataFolder().mkdirs();
 
-            File file = new File(getDataFolder(), "config.yml");
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            getLogger().info("Config.yml not found, creating!");
+            saveDefaultConfig();
+            return;
+        }
 
-            if (!file.exists()) {
-                getLogger().info("Config.yml not found, creating!");
-                saveDefaultConfig();
-            } else {
+        getLogger().info("Config.yml found, loading!");
 
-                if(getConfig().getInt("config-version") == 1) {
+        // Converter for config version 1 -> newest version is 2
+        if(!getConfig().isSet("config-version")) {
 
-                    List<String> oldTools = getConfig().getStringList("tools");
+            List<String> oldTools = getConfig().getStringList("tools");
 
-                    for(int i = 0; i < oldTools.size(); i++) {
-                        String tool = oldTools.get(i);
+            for(int i = 0; i < oldTools.size(); i++) {
+                String tool = oldTools.get(i);
 
-                        switch (tool) {
-                            case "wooden":
-                                oldTools.set(i, "WOODEN_AXE");
-                                break;
-                            case "stone":
-                                oldTools.set(i, "STONE_AXE");
-                                break;
-                            case "iron":
-                                oldTools.set(i, "IRON_AXE");
-                                break;
-                            case "golden":
-                                oldTools.set(i, "GOLDEN_AXE");
-                                break;
-                            case "diamond":
-                                oldTools.set(i, "DIAMOND_AXE");
-                                break;
-                        }
-                    }
-
-                    this.getLogger().log(Level.INFO, "Changed configuration to version 2! Now supporting all materials as tools.");
-
-                    getConfig().set("config-version", 2);
+                switch (tool) {
+                    case "wooden":
+                        oldTools.set(i, "WOODEN_AXE");
+                        break;
+                    case "stone":
+                        oldTools.set(i, "STONE_AXE");
+                        break;
+                    case "iron":
+                        oldTools.set(i, "IRON_AXE");
+                        break;
+                    case "golden":
+                        oldTools.set(i, "GOLDEN_AXE");
+                        break;
+                    case "diamond":
+                        oldTools.set(i, "DIAMOND_AXE");
+                        break;
                 }
-
-                getLogger().info("Config.yml found, loading!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            this.getLogger().log(Level.INFO, "Changed configuration to version 2! Now supporting all materials as tools.");
+
+            getConfig().set("config-version", 2);
         }
     }
 
