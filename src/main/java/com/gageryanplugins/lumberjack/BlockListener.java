@@ -1,73 +1,56 @@
 package com.gageryanplugins.lumberjack;
 
-import java.util.List;
-
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
 public class BlockListener implements Listener {
-	
-	private Lumberjack plugin;
-	
-	public BlockListener(Lumberjack plugin) {
-		this.plugin = plugin;
+
+    private Lumberjack plugin;
+    private List<Material> allowedTools;
+
+    public BlockListener(Lumberjack plugin) {
+        this.plugin = plugin;
+        allowedTools = new ArrayList<>();
+
+        // Load allowed tools from configuration file
+		this.plugin.getConfig().getStringList("tools").forEach(tool -> {
+			//TODO: Handle configuration error
+			allowedTools.add(Material.valueOf(tool));
+		});
 	}
 
-	@EventHandler
-	public void onLogBreak(BlockBreakEvent e) {
-		String ih = e.getPlayer().getInventory().getItemInMainHand().getType().toString();
+    @EventHandler
+    public void onLogBreak(BlockBreakEvent event) {
+    	Player player = event.getPlayer();
 
-		World tw = e.getPlayer().getWorld();
-		Player p = e.getPlayer();
+        if (!player.hasPermission("lumberjack.use")) return; //TODO: Add no permissions message
+		if(!allowedTools.contains(player.getInventory().getItemInMainHand().getType())) return;
 
-		int x = e.getBlock().getX();
-		int y = e.getBlock().getY();
-		int z = e.getBlock().getZ();
+        switch (event.getBlock().getType()) {
+            case OAK_LOG:
+            case STRIPPED_OAK_LOG:
+            case SPRUCE_LOG:
+            case STRIPPED_SPRUCE_LOG:
+            case BIRCH_LOG:
+            case JUNGLE_LOG:
+            case STRIPPED_JUNGLE_LOG:
+            case ACACIA_LOG:
+            case STRIPPED_ACACIA_LOG:
+            case DARK_OAK_LOG:
+            case STRIPPED_DARK_OAK_LOG:
+				Location location = event.getBlock().getLocation();
 
-		String oak = "OAK_LOG";
-		String soak = "STRIPPED_OAK_LOG";
-		String spruce = "SPRUCE_LOG";
-		String sspruce = "STRIPPED_SPRUCE_LOG";
-		String birch = "BIRCH_LOG";
-		String sbirch = "STRIPPED_BIRCH_LOG";
-		String jungle = "JUNGLE_LOG";
-		String sjungle = "STRIPPED_JUNGLE_LOG";
-		String acacia = "ACACIA_LOG";
-		String sacacia = "STRIPPED_ACACIA_LOG";
-		String darkoak = "DARK_OAK_LOG";
-		String sdarkoak = "STRIPPED_DARK_OAK_LOG";
-		String broke = e.getBlock().getBlockData().getMaterial().toString();
-		if (p.hasPermission("lumberjack.use")) {
-			List<String> tool = this.plugin.getConfig().getStringList("tools");
-			if (broke == oak ||
-			(broke == soak) ||
-		    (broke == spruce) ||
-		    (broke == sspruce) ||
-		    (broke == birch) ||
-		    (broke == sbirch) ||
-		    (broke == jungle) ||
-		    (broke == sjungle) ||
-		    (broke == acacia) ||
-		    (broke == sacacia) ||
-		    (broke == darkoak) ||
-		    (broke == sdarkoak)) {
-				if (((tool.contains("wooden")) && ih == "WOODEN_AXE") || 
-				   ((tool.contains("stone")) && ih == "STONE_AXE") || 
-				   ((tool.contains("iron")) && ih == "IRON_AXE") || 
-				   ((tool.contains("golden")) && ih == "GOLDEN_AXE") || 
-				   ((tool.contains("diamond")) && ih == "DIAMOND_AXE")) {
-					plugin.breakChain(tw, x, y, z);
-				} else {
-					return;
-				}
-			} else {
-				return;
-			}
-		} else {
-			return;
-		}
-	}
+            	plugin.breakChain(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+                break;
+        }
+    }
 }
