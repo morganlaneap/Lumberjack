@@ -6,8 +6,16 @@
 
     <groupId>com.gageryanplugins</groupId>
     <artifactId>Lumberjack</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0-DEVELOPMENT</version>
 
+    <contributors>
+        <contributor>
+            <name>Ryaan</name>
+        </contributor>
+        <contributor>
+            <name>DevSnox</name>
+        </contributor>
+    </contributors>
 
     <repositories>
         <repository>
